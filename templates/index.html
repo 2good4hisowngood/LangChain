@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangChain Web UI</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <h1>LangChain Web UI</h1>
+    <form id="api-form">
+        <label for="user-input">Your message:</label>
+        <input type="text" id="user-input" required>
+        <button type="submit">Send</button>
+    </form>
+    <div id="response-container">
+        <h2>AI Response:</h2>
+        <p id="response"></p>
+    </div>
+    <!-- Add this form for the /agent endpoint -->
+    <form id="api-form-agent">
+        <label for="user-input-agent">Your message for Agent:</label>
+        <input type="text" id="user-input-agent" required>
+        <button type="submit">Send to Agent</button>
+    </form>
+    <div id="response-container-agent">
+        <h2>Agent Response:</h2>
+        <p id="response-agent"></p>
+    </div>
+
+    <!-- Add this form for the /memory endpoint -->
+    <form id="api-form-memory">
+        <label for="user-input-memory">Your message for Memory:</label>
+        <input type="text" id="user-input-memory" required>
+        <button type="submit">Send to Memory</button>
+    </form>
+    <div id="response-container-memory">
+        <h2>Memory Response:</h2>
+        <p id="response-memory"></p>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>

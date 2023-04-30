@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from langchain import OpenAI, ConversationChain
 from langchain.agents import load_tools, initialize_agent, AgentType
 from langchain.chat_models import ChatOpenAI
@@ -33,6 +33,10 @@ def memory():
     user_input = request.json['input']
     response = conversation_with_memory.predict(input=user_input)
     return jsonify({"response": response})
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
