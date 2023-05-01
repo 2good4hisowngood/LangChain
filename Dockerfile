@@ -11,10 +11,10 @@ COPY . .
 COPY static/ /app/static/
 COPY templates/ /app/templates/
 
-EXPOSE 443
+EXPOSE 5000
 
 ARG OPENAI_API_KEY
 ENV OPENAI_API_KEY=$OPENAI_API_KEY
 ARG SERPAPI_API_KEY
 ENV SERPAPI_API_KEY=$SERPAPI_API_KEY
-CMD ["gunicorn", "-b", "0.0.0.0:443", "app:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
