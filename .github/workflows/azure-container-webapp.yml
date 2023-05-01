@@ -57,7 +57,7 @@ jobs:
           # Azure Container Registry tenant
           tenant: ${{ secrets.AZURE_TENANT_ID }}
           # The name of the ACR, minus the .azurecr.io
-          registry: ${{ $AZURE_CONTAINER_REGISTRY_NAME }}
+          registry: ${{ AZURE_CONTAINER_REGISTRY_NAME }}
           # Repository to use
           #repository: ${{ secrets.REPOSITORY_NAME }}
           # Github access token for private repositories
