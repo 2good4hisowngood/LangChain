@@ -59,21 +59,21 @@ jobs:
           # The name of the ACR, minus the .azurecr.io
           registry: ${{ secrets.AZURE_CONTAINER_REGISTRY_NAME }}
           # Repository to use
-          repository: ${{ secrets.REPOSITORY_NAME }}
+          #repository: ${{ secrets.REPOSITORY_NAME }}
           # Github access token for private repositories
           # git_access_token: 
           # Docker image name
-          image: # optional
+          image: ${{ secrets.REPOSITORY_NAME }} # optional
           # Docker image tag, default to the commit SHA
-          tag: # optional
+          tag: latest # optional
           # Branch to build from, defaults to master
-          branch: # optional
+          branch: master # optional
           # The folder in the Github repo that holds the source
           folder: .
           # The location of the Dockerfile; defaults to ./Dockerfile
-          dockerfile: # optional
+          #dockerfile: # optional
           # JSON specifying key=value pairs as as Docker build arguments
-          build_args: # optional
+          #build_args: # optional
       #- name: Log in to GitHub container registry
       #  uses: docker/login-action@v1.10.0
       #  with:
