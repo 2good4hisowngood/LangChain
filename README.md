@@ -37,7 +37,7 @@ docker build --build-arg OPENAI_API_KEY="${openaiApiKey}" --build-arg SERPAPI_AP
 3. Run the Docker container with the following command:
 
 ```
-docker run -p 5000:5000 langchain-app
+docker run -p 443:443 langchain-app
 ```
 
 ### Linux
@@ -62,19 +62,19 @@ docker build --build-arg OPENAI_API_KEY="$OPENAI_API_KEY" --build-arg SERPAPI_AP
 4. Run the Docker container with the following command:
 
 ```
-docker run -p 5000:5000 langchain-app
+docker run -p 443:443 langchain-app
 ```
 
 ## Usage
 
-The application should now be running on your local machine at `http://localhost:5000`.
+The application should now be running on your local machine at `http://localhost:443`.
 
 You can test the `/chat`, `/agent`, and `/memory` endpoints by sending POST requests with JSON data containing the input message. You can use tools like [Postman](https://www.postman.com/) or [curl](https://curl.se/) to test the endpoints.
 
 For example, using curl, you can test the `/chat` endpoint like this:
 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"input": "Hello!"}' http://localhost:5000/chat
+curl -X POST -H "Content-Type: application/json" -d '{"input": "Hello!"}' http://localhost:443/chat
 ```
 
 This should return a JSON response with the AI's reply.
