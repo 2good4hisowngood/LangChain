@@ -11,8 +11,8 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'd1cd0c1e-296b-4521-b759-721e02220ead'
-  imageRepository: 'LangChainApp'
-  containerRegistry: '2goodspersonalregistry.azurecr.io'
+  imageRepository: '$(appName)'
+  containerRegistry: '$(containerRegistry)'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 
@@ -37,3 +37,12 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: ''
+        appType: 'webAppContainer'
+        WebAppName: '$(appName)'
+        DockerNamespace: '$(appName)'
+        DockerRepository: '$(containerRegistry)/$(imageRepository):$(tag)'
+        DockerImageTag: '$(tag)'
