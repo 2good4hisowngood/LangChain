@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "name": "Starfinder NPC",
+        "template": "Create an insteresting Starfinder NPC for a campaign. Include Name, Race, Class, Themes, Unique Weapon, and Catchphrase: {input}"
+    },
+    {
+        "id": 2,
+        "name": "Advice",
+        "template": "I need advice on: {input}. What should I do?"
+    },
+    {
+        "id": 3,
+        "name": "Explanation",
+        "template": "Can you explain: {input}?"
+    }
+]

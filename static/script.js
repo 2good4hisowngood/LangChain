@@ -56,3 +56,33 @@ formMemory.addEventListener("submit", async (e) => {
     const data = await response.json();
     responseContainerMemory.textContent = data.response;
 });
+
+async function loadTemplates() {
+    const response = await fetch("/templates");
+    const data = await response.json();
+    const templateSelector = document.getElementById("template-selector");
+    data.templates.forEach((template) => {
+        const option = document.createElement("option");
+        option.value = template.id;
+        option.textContent = template.name;
+        templateSelector.appendChild(option);
+    });
+}
+
+loadTemplates();
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const input = userInput.value;
+    const selectedTemplateId = templateSelector.value;
+    const response = await fetch("/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ input, template_id: selectedTemplateId }),
+    });
+
+    const data = await response.json();
+    responseContainer.textContent = data.response;
+});
