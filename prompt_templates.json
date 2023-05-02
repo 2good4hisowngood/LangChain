@@ -1,8 +1,8 @@
 [
     {
         "id": 1,
-        "name": "Starfinder NPC",
-        "template": "Create an insteresting Starfinder NPC for a campaign. Include Name, Race, Class, Themes, Unique Weapon, and Catchphrase: {input}"
+        "name": "Default: No Template",
+        "template": "{input}"
     },
     {
         "id": 2,

@@ -34,16 +34,21 @@ memory = ConversationBufferMemory(return_messages=True)
 
 # Initialize conversation chain with memory and language model
 conversation_with_memory = ConversationChain(memory=memory, llm=llm)
-
+  
 @app.route('/chat', methods=['POST'])
 def chat():
     try:
         user_input = request.json['input']
-        response = conversation.predict(input=user_input)
+        template_id = request.json.get('template_id', None)
+        if template_id:
+            response = conversation.predict(input=user_input, template_id=template_id)
+        else:
+            response = conversation.predict(input=user_input)
         return jsonify({"response": response})
     except Exception as e:
         logger.exception("Error in /chat endpoint")
         return jsonify({"error": "An error occurred while processing your request. Please try again."}), 500
+
 
 @app.route('/agent', methods=['POST'])
 def agent():
