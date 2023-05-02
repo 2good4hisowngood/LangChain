@@ -23,10 +23,13 @@ EXPOSE 5000
 
 # Set environment variables for API keys
 ARG OPENAI_API_KEY
-ENV OPENAI_API_KEY=$OPENAI_API_KEY
 ARG SERPAPI_API_KEY
-ENV SERPAPI_API_KEY=$SERPAPI_API_KEY
 
-# Run Gunicorn to serve the Flask app and display meaningful error messages
-CMD gunicorn -b 0.0.0.0:5000 app:app 2>&1 \
-    || { echo "Error: Failed to start Gunicorn server"; exit 1; }
+ENV OPENAI_API_KEY=${OPENAI_API_KEY}
+ENV SERPAPI_API_KEY=${SERPAPI_API_KEY}
+
+RUN if [ -z "$OPENAI_API_KEY" ]; then echo "Warning: OPENAI_API_KEY not set"; fi
+RUN if [ -z "$SERPAPI_API_KEY" ]; then echo "Warning: SERPAPI_API_KEY not set"
+
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"\
+    || { echo "Error: Failed to start Gunicorn server"; exit 1; }]
