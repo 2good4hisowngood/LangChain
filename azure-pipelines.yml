@@ -37,12 +37,3 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
-    - task: AzureRmWebAppDeployment@4
-      inputs:
-        ConnectionType: 'AzureRM'
-        azureSubscription: '$(azureSubscriptionID)'
-        appType: 'webAppContainer'
-        WebAppName: '$(appName)'
-        DockerNamespace: '$(appName)'
-        DockerRepository: '$(containerRegistry)/$(imageRepository):$(tag)'
-        DockerImageTag: '$(tag)'
