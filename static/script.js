@@ -1,88 +1,59 @@
-const form = document.getElementById("api-form");
-const userInput = document.getElementById("user-input");
-const responseContainer = document.getElementById("response");
+const fileUpload = document.getElementById('fileUpload');
+const uploadBtn = document.getElementById('uploadBtn');
+const queryInput = document.getElementById('queryInput');
+const queryBtn = document.getElementById('queryBtn');
+const answer = document.getElementById('answer');
 
-form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const input = userInput.value;
-    const response = await fetch("/chat", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ input }),
-    });
+uploadBtn.addEventListener('click', async () => {
+    if (fileUpload.files.length === 0) {
+        alert('Please select a file');
+        return;
+    }
 
-    const data = await response.json();
-    responseContainer.textContent = data.response;
+    const file = fileUpload.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+        const response = await fetch('/upload', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to upload file');
+        }
+
+        alert('File uploaded successfully');
+    } catch (error) {
+        alert(error.message);
+    }
 });
 
-// Add this code block for the /agent endpoint
-const formAgent = document.getElementById("api-form-agent");
-const userInputAgent = document.getElementById("user-input-agent");
-const responseContainerAgent = document.getElementById("response-agent");
+queryBtn.addEventListener('click', async () => {
+    const query = queryInput.value;
 
-formAgent.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const input = userInputAgent.value;
-    const response = await fetch("/agent", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ input }),
-    });
+    if (!query.trim()) {
+        alert('Please enter a query');
+        return;
+    }
 
-    const data = await response.json();
-    responseContainerAgent.textContent = data.response;
-});
+    try {
+        const response = await fetch('/query', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ question: query })
+        });
 
-// Add this code block for the /memory endpoint
-const formMemory = document.getElementById("api-form-memory");
-const userInputMemory = document.getElementById("user-input-memory");
-const responseContainerMemory = document.getElementById("response-memory");
+        if (!response.ok) {
+            throw new Error('Failed to fetch answer');
+        }
 
-formMemory.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const input = userInputMemory.value;
-    const response = await fetch("/memory", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ input }),
-    });
-
-    const data = await response.json();
-    responseContainerMemory.textContent = data.response;
-});
-
-async function loadTemplates() {
-    const response = await fetch("/templates");
-    const data = await response.json();
-    const templateSelector = document.getElementById("template-selector");
-    data.templates.forEach((template) => {
-        const option = document.createElement("option");
-        option.value = template.id;
-        option.textContent = template.name;
-        templateSelector.appendChild(option);
-    });
-}
-
-loadTemplates();
-
-form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const input = userInput.value;
-    const selectedTemplateId = templateSelector.value;
-    const response = await fetch("/chat", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ input, template_id: selectedTemplateId }),
-    });
-
-    const data = await response.json();
-    responseContainer.textContent = data.response;
+        const data = await response.json();
+        answer.textContent = data.answer;
+    } catch (error) {
+        alert(error.message);
+    }
 });

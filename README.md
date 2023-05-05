@@ -1,3 +1,4 @@
+# no one should use this, it's just a lab repo for testing 👍
 # LangChain App
 
 This application is a Flask API that provides chat, agent, and memory functionalities using the LangChain library. It is built with Docker for easy setup and deployment.

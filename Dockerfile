@@ -1,8 +1,14 @@
 # Use the official Python 3.8 slim image as the base image
-FROM python:3.8-slim
+FROM python:3.11-slim
 
 # Set the working directory
 WORKDIR /app
+
+# Install build-essential to allow for the installation of Python packages with C extensions for chromadb
+RUN apt-get update && \
+    apt-get install -y build-essential && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy requirements.txt to the working directory
 COPY requirements.txt .
@@ -24,12 +30,12 @@ EXPOSE 5000
 # Set environment variables for API keys
 ARG OPENAI_API_KEY
 ARG SERPAPI_API_KEY
+ARG PINECONE_API_KEY 
+ARG PINECONE_ENV 
 
 ENV OPENAI_API_KEY=${OPENAI_API_KEY}
 ENV SERPAPI_API_KEY=${SERPAPI_API_KEY}
+ENV PINECONE_API_KEY=${PINECONE_API_KEY}
+ENV PINECONE_ENV =${PINECONE_ENV}
 
-RUN if [ -z "$OPENAI_API_KEY" ]; then echo "Warning: OPENAI_API_KEY not set"; fi
-RUN if [ -z "$SERPAPI_API_KEY" ]; then echo "Warning: SERPAPI_API_KEY not set"
-
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"\
-    || { echo "Error: Failed to start Gunicorn server"; exit 1; }]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
